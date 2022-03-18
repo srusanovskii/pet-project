@@ -34,24 +34,24 @@ const Button = styled.button`
   border-radius: 3px;
 `;
 
-const Form = ({addTask}) => {
-    const [TopicInput, setTopicInput] = useState("")
-    const [descriptionInput, setDescriptionInput] = useState("")
+const EditTodo = ({editTask}) => {
+    const [editTopicInput, setEditTopicInput] = useState("")
+    const [editDescriptionInput, setEditDescriptionInput] = useState("")
 
     const handleChange = (e) => {
-        setTopicInput(e.currentTarget.value)
+        setEditTopicInput(e.currentTarget.value)
     }
     const handleChange1 = (e) => {
-        setDescriptionInput(e.currentTarget.value)
+        setEditDescriptionInput(e.currentTarget.value)
     }
 
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        addTask(TopicInput, descriptionInput)
-        setTopicInput("")
-        setDescriptionInput("")
-        console.log(descriptionInput, TopicInput)
+        editTask(editTopicInput, editDescriptionInput)
+        setEditTopicInput("")
+        setEditDescriptionInput("")
+        console.log(setEditDescriptionInput, editTopicInput)
     }
     const handleKeyPress = (e) => {
         if (e.key === "Enter"){
@@ -60,25 +60,25 @@ const Form = ({addTask}) => {
     }
 
     return (
-        <FormDiv id="FormDivAdd" onSubmit={handleSubmit}>
+        <FormDiv id="FormDiv1" onSubmit={handleSubmit}>
             <Topic
-                value={TopicInput}
-                placeholder="Заголовок"
+                value={editTopicInput}
+                placeholder="Новый заголовок"
                 type="text"
                 onChange={handleChange}
                 onKeyDown={handleKeyPress}
             />
             <Description
-                placeholder="Текст"
-                value={descriptionInput}
+                placeholder="Новый текст"
+                value={editDescriptionInput}
                 type="text"
                 onChange={handleChange1}
                 onKeyDown={handleKeyPress}
             />
-            <Button form="FormDivAdd" type="submit">Добавить</Button>
+            <Button form="FormDiv1" type="submit">Изменить</Button>
         </FormDiv>
     );
 };
 
 
-export default Form;
+export default EditTodo;
