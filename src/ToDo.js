@@ -28,10 +28,10 @@ const Description = styled.input`
   width: 600px;
 `;
 
-function ToDo({todo, removeTask, index, toggleModal,}) {
+function ToDo({todo, removeTask, index, toggleModal}) {
 
     return (
-        <FormDiv>
+        <FormDiv id="FormDiv2">
         <StyledDiv>
             <h4>{index + 1}</h4>
             <div>
@@ -45,7 +45,7 @@ function ToDo({todo, removeTask, index, toggleModal,}) {
                 X
             </div>
             <div>
-            <div onClick={toggleModal}>redactor</div>
+            <button form="FormDiv2" type="submit" onClick={toggleModal}>redactor</button>
 
             </div>
         </StyledDiv>

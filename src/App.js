@@ -5,6 +5,7 @@ import TitleName from "./Title";
 import {useState} from "react";
 import ToDo from "./ToDo";
 import {Modal} from "./modal";
+import EditTodo from "./EditTodo";
 
 const AppWrapper = styled.div`
     width: 100%;
@@ -31,23 +32,27 @@ const App = () => {
     }
     const removeTask = (id) => {
         setTodos([...todos.filter((todo) => todo.id !== id)])
-        
     }
     const handleToggle = () => {
-
     }
 
     //id
     //добавить стейт
-
-    const toggleModal = () => {
+    const toggleModal = (e) => {
+        e.preventDefault()
         setShowModal(prev => !prev)
     }
+
+    const editTask = () =>{
+
+    }
+
   return (
       <AppWrapper>
-          <Modal showModal={showModal} />
           <TitleName todos={todos}></TitleName>
           <Form addTask={addTask}></Form>
+          <Modal showModal={showModal} editTask={editTask}>
+          </Modal>
           {todos.map((todo, index)=>{
               return (
                   <ToDo
@@ -59,6 +64,9 @@ const App = () => {
                       index={index}
                       toggleModal={toggleModal}
                       showModal={showModal}
+                      setShowModal={setShowModal}
+
+
                   />
               )
           })}
