@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import styled from "styled-components";
 import {useState} from "react";
 
@@ -9,7 +9,7 @@ const Topic = styled.input`
   background: #ffffff;
   border: none;
   border-radius: 3px;
-`;
+`
 const Description = styled.input`
   font-size: 18px;
   padding: 10px;
@@ -18,25 +18,29 @@ const Description = styled.input`
   border: none;
   border-radius: 3px;
   width: 600px;
-`;
+`
 const FormDiv = styled.form`
   display: flex;
   justify-content: center;
 `
-const Button = styled.button`
+const Button = styled.div`
   background: #ffffff;
   color: ${props => props.primary ? "white" : "palevioletred"};
 
   font-size: 1em;
   margin: 1em;
   padding: 0.25em 1em;
-  border: 2px solid palevioletred;
+  border: 2px solid #5dbde7;
   border-radius: 3px;
 `;
 
-const EditTodo = ({editTask}) => {
+const EditTodo = ({editTask, todo}) => {
     const [editTopicInput, setEditTopicInput] = useState("")
     const [editDescriptionInput, setEditDescriptionInput] = useState("")
+    useEffect(()=>{
+        setEditTopicInput(todo?.task)
+        setEditDescriptionInput(todo?.task2)
+    },[todo])
 
     const handleChange = (e) => {
         setEditTopicInput(e.currentTarget.value)
@@ -48,10 +52,11 @@ const EditTodo = ({editTask}) => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        editTask(editTopicInput, editDescriptionInput)
+        const newObj = {...todo, task: editTopicInput, task2: editDescriptionInput}
+
+        editTask(newObj)
         setEditTopicInput("")
         setEditDescriptionInput("")
-        console.log(setEditDescriptionInput, editTopicInput)
     }
     const handleKeyPress = (e) => {
         if (e.key === "Enter"){
@@ -60,7 +65,7 @@ const EditTodo = ({editTask}) => {
     }
 
     return (
-        <FormDiv id="FormDiv1" onSubmit={handleSubmit}>
+        <FormDiv id="FormDiv1">
             <Topic
                 value={editTopicInput}
                 placeholder="Новый заголовок"
@@ -75,10 +80,8 @@ const EditTodo = ({editTask}) => {
                 onChange={handleChange1}
                 onKeyDown={handleKeyPress}
             />
-            <Button form="FormDiv1" type="submit">Изменить</Button>
+            <Button onClick={handleSubmit} form="FormDiv1" type="submit">Изменить</Button>
         </FormDiv>
     );
 };
-
-
 export default EditTodo;

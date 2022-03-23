@@ -5,7 +5,7 @@ import TitleName from "./Title";
 import {useState} from "react";
 import ToDo from "./ToDo";
 import {Modal} from "./modal";
-import EditTodo from "./EditTodo";
+
 
 const AppWrapper = styled.div`
     width: 100%;
@@ -18,6 +18,7 @@ const AppWrapper = styled.div`
 const App = () => {
     const [todos, setTodos] = useState([])
     const [showModal, setShowModal] = useState(false)
+    const [editItem, setEditItem] = useState()
 
     const addTask = (input, input2) => {
         if (input || input2){
@@ -25,33 +26,41 @@ const App = () => {
                 id: Math.random().toString(36).substring(2,9),
                 task: input,
                 task2: input2,
-                complete: false
+                complete: true
             }
             setTodos([...todos, newItem])
         }
     }
-    const removeTask = (id) => {
+    const removeTask = (e, id) => {
+         e.preventDefault()
+         e.stopPropagation()
         setTodos([...todos.filter((todo) => todo.id !== id)])
     }
     const handleToggle = () => {
     }
 
-    //id
-    //добавить стейт
-    const toggleModal = (e) => {
+    const toggleModal = (e, todoItem) => {
         e.preventDefault()
+        e.stopPropagation()
+        setEditItem(todoItem)
         setShowModal(prev => !prev)
     }
 
-    const editTask = () =>{
-
+    const editTask = (newTodoItem) =>{
+       const newTodos = todos.map((currentValue)=>{
+            if (currentValue.id === newTodoItem.id){
+                return newTodoItem
+            }
+            return currentValue
+        })
+        setTodos(newTodos)
     }
 
   return (
       <AppWrapper>
           <TitleName todos={todos}></TitleName>
           <Form addTask={addTask}></Form>
-          <Modal showModal={showModal} editTask={editTask}>
+          <Modal showModal={showModal} editTask={editTask} editItem={editItem}>
           </Modal>
           {todos.map((todo, index)=>{
               return (
@@ -65,8 +74,7 @@ const App = () => {
                       toggleModal={toggleModal}
                       showModal={showModal}
                       setShowModal={setShowModal}
-
-
+                      editTask={editTask}
                   />
               )
           })}

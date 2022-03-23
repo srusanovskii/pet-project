@@ -18,7 +18,7 @@ const TitleName = ({todos}) => {
             <Title>
                 ToDo
             </Title>
-            <Title>Число задач {todos.length} </Title>
+            <Title>Число задач {todos.length}</Title>
         </Wrapper>
     );
 };
