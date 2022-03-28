@@ -1,13 +1,8 @@
-import styled from "styled-components";
 import React from "react";
 import EditTodo from "./EditTodo";
+import {FormDiv} from "../atoms/Divs";
 
-const FormDiv = styled.form`
-  display: flex;
-  justify-content: center;
-`
-
-export const Modal = (prop) => {
+export const EditTodoModal = (prop) => {
     return (
         <>{prop.showModal ?
             <FormDiv>
