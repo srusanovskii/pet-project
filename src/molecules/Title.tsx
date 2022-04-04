@@ -1,18 +1,22 @@
 import React from 'react';
 import styled from "styled-components";
+import {Todo} from "../atoms/Todo";
+
+type Props = {
+    todos: Todo[];
+}
 
 const Title = styled.h1`
   font-size: 1.5em;
   text-align: center;
   color: #000000;
-`;
-
+`
 const Wrapper = styled.section`
   padding: 4em;
   background: #ffffff;
-`;
-
-const TitleName = ({todos}) => {
+`
+const TitleName = (props: Props) => {
+    const {todos} = props
     return (
         <Wrapper>
             <Title>
@@ -22,5 +26,4 @@ const TitleName = ({todos}) => {
         </Wrapper>
     );
 };
-
 export default TitleName;
