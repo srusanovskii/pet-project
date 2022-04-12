@@ -1,5 +1,9 @@
-import React from 'react';
 import styled from "styled-components";
+import {Todo} from "../atoms/Todo";
+
+type Props = {
+    todos: Todo[];
+}
 
 const Title = styled.h1`
   font-size: 1.5em;
@@ -10,8 +14,8 @@ const Wrapper = styled.section`
   padding: 4em;
   background: #ffffff;
 `
-
-const TitleName = ({todos}) => {
+const TitleName = (props: Props) => {
+    const {todos} = props
     return (
         <Wrapper>
             <Title>

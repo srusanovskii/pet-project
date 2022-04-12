@@ -5,6 +5,7 @@ import TitleName from "../molecules/Title";
 import {useState} from "react";
 import ToDo from "../organisms/ToDo";
 import {EditTodoModal} from "../molecules/EditTodoModal";
+import {Todo} from "../atoms/Todo";
 
 const AppWrapper = styled.div`
     width: 100%;
@@ -13,12 +14,13 @@ const AppWrapper = styled.div`
     background: black;
     color: white;
 `
-const App = () => {
-    const [todos, setTodos] = useState([])
-    const [showModal, setShowModal] = useState(false)
-    const [editItem, setEditItem] = useState()
 
-    const addTask = (topic, description) => {
+const App = () => {
+    const [todos, setTodos] = useState<Todo[]>([])
+    const [showModal, setShowModal] = useState(false)
+    const [editItem, setEditItem] = useState<Todo>({} as Todo)
+
+    const addTask = (topic: string, description: string) => {
         if (topic || description){
             const newItem = {
                 id: Math.random().toString(36).substring(2,9),
@@ -29,18 +31,18 @@ const App = () => {
             setTodos([...todos, newItem])
         }
     }
-    const removeTask = (e, id) => {
+    const removeTask = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, id: string) => {
          e.preventDefault()
          e.stopPropagation()
         setTodos([...todos.filter((todo) => todo.id !== id)])
     }
-    const toggleModal = (e, todoItem) => {
+    const toggleModal = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, todoItem: Todo) => {
         e.preventDefault()
         e.stopPropagation()
         setEditItem(todoItem)
         setShowModal(prev => !prev)
     }
-    const editTask = (newTodoItem) =>{
+    const editTask = (newTodoItem: Todo) =>{
        const newTodos = todos.map((currentValue)=>{
             if (currentValue.id === newTodoItem.id){
                 return newTodoItem
@@ -53,19 +55,21 @@ const App = () => {
       <AppWrapper>
           <TitleName todos={todos}></TitleName>
           <Form addTask={addTask}></Form>
-          <EditTodoModal showModal={showModal} editTask={editTask} editItem={editItem}>
-          </EditTodoModal>
+          {showModal && 
+            <EditTodoModal editTask={editTask} editItem={editItem}/>
+          }
+          
           {todos.map((todo, index)=>{
               return (
                   <ToDo
                       todo={todo}
                       key={todo.id}
                       removeTask={removeTask}
-                      todos={todos}
+                      // todos={todos}
                       index={index}
                       toggleModal={toggleModal}
-                      showModal={showModal}
-                      setShowModal={setShowModal}
+                      // showModal={showModal}
+                      // setShowModal={setShowModal}
                       editTask={editTask}
                   />
               )
