@@ -1,11 +1,17 @@
-import React from "react";
-import styled from "styled-components";
-import Form from "../molecules/Form";
-import TitleName from "../molecules/Title";
-import {useState} from "react";
-import ToDo from "../organisms/ToDo";
-import {EditTodoModal} from "../molecules/EditTodoModal";
-import {Todo} from "../atoms/Todo";
+import React from "react"
+import styled from "styled-components"
+import Form from "../molecules/Form"
+import TitleName from "../molecules/Title"
+import {useState} from "react"
+import ToDo from "../organisms/ToDo"
+import {EditTodoModal} from "../molecules/EditTodoModal"
+import {Todo} from "../atoms/Todo"
+
+interface TodoContext {
+    todoList: Todo[],
+    setTodoList: React.Dispatch<React.SetStateAction<Todo[]>>
+}
+export const TodoListContext = React.createContext<TodoContext>({} as TodoContext);
 
 const AppWrapper = styled.div`
     width: 100%;
@@ -16,66 +22,38 @@ const AppWrapper = styled.div`
 `
 
 const App = () => {
-    const [todos, setTodos] = useState<Todo[]>([])
+    const [todoList, setTodoList] = useState<Todo[]>([])
     const [showModal, setShowModal] = useState(false)
-    const [editItem, setEditItem] = useState<Todo>({} as Todo)
+    const [selectedTodo, setSelectedTodo] = useState<Todo>({} as Todo)
 
-    const addTask = (topic: string, description: string) => {
-        if (topic || description){
-            const newItem = {
-                id: Math.random().toString(36).substring(2,9),
-                taskTopic: topic,
-                taskDescription: description,
-                complete: true
-            }
-            setTodos([...todos, newItem])
-        }
-    }
-    const removeTask = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, id: string) => {
-         e.preventDefault()
-         e.stopPropagation()
-        setTodos([...todos.filter((todo) => todo.id !== id)])
-    }
     const toggleModal = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, todoItem: Todo) => {
         e.preventDefault()
         e.stopPropagation()
-        setEditItem(todoItem)
+        setSelectedTodo(todoItem)
         setShowModal(prev => !prev)
     }
-    const editTask = (newTodoItem: Todo) =>{
-       const newTodos = todos.map((currentValue)=>{
-            if (currentValue.id === newTodoItem.id){
-                return newTodoItem
-            }
-            return currentValue
-        })
-        setTodos(newTodos)
-    }
-  return (
-      <AppWrapper>
-          <TitleName todos={todos}></TitleName>
-          <Form addTask={addTask}></Form>
-          {showModal && 
-            <EditTodoModal editTask={editTask} editItem={editItem}/>
-          }
-          
-          {todos.map((todo, index)=>{
-              return (
-                  <ToDo
-                      todo={todo}
-                      key={todo.id}
-                      removeTask={removeTask}
-                      // todos={todos}
-                      index={index}
-                      toggleModal={toggleModal}
-                      // showModal={showModal}
-                      // setShowModal={setShowModal}
-                      editTask={editTask}
-                  />
-              )
-          })}
-      </AppWrapper>
-  );
+
+    return (
+        <TodoListContext.Provider value={{todoList, setTodoList}}>
+            <AppWrapper>
+                <TitleName todos={todoList} />
+                <Form />
+                {showModal && 
+                    <EditTodoModal todoForEdit={selectedTodo}/>
+                }
+                <TodoListContext.Consumer>
+                    {value => value.todoList.map((todo, index) => 
+                        <ToDo
+                            todo={todo}
+                            key={todo.id}
+                            index={index}
+                            toggleModal={toggleModal}
+                        />
+                    )}
+                </TodoListContext.Consumer>
+            </AppWrapper>
+        </TodoListContext.Provider>
+    );
 };
 
 export default App;

@@ -1,11 +1,13 @@
+import {useContext} from 'react';
 import {useForm} from 'react-hook-form';
 import {Button} from "../atoms/Buttons";
 import {Description, Topic} from "../atoms/Inputs";
 import {FormDiv} from "../atoms/Divs";
 import {Todo} from "../atoms/Todo";
 
+import { TodoListContext } from "./../pages/App";
+
 type Props = {
-    editTask(newTodoItem: Todo): void;
     todo: Todo;
 }
 
@@ -15,18 +17,26 @@ type FormInputs = {
 };
 
 const EditTodo = (props: Props) => {
-    const {editTask, todo} = props
-    const {register, handleSubmit} = useForm<FormInputs>();
+    const {todoList, setTodoList} = useContext(TodoListContext);
+
+    const {todo} = props
+    const {register, handleSubmit} = useForm<FormInputs>()
+
+    const editTodo = (newTodo: Todo): Todo[] => {
+        const editedTodoList = todoList.map((todo) =>
+            todo.id === newTodo.id ? newTodo : todo
+        )
+        return editedTodoList;
+    }
 
     const onSubmit = (formData: FormInputs) => {
-        console.log(formData);
         const editedTodo = {
             ...todo, 
             taskTopic: formData.topic, 
             taskDescription: formData.description
-        };
-        console.log(editedTodo);
-        editTask(editedTodo);
+        }
+        const editedTodoList = editTodo(editedTodo)
+        setTodoList(editedTodoList)
     }
 
     return (
