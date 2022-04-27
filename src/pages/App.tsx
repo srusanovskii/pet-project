@@ -7,11 +7,8 @@ import ToDo from "../organisms/ToDo"
 import {EditTodoModal} from "../molecules/EditTodoModal"
 import {Todo} from "../atoms/Todo"
 
-interface TodoContext {
-    todoList: Todo[],
-    setTodoList: React.Dispatch<React.SetStateAction<Todo[]>>
-}
-export const TodoListContext = React.createContext<TodoContext>({} as TodoContext);
+import { todoListAtom } from "../store"
+import { useAtom } from "@reatom/react";
 
 const AppWrapper = styled.div`
     width: 100%;
@@ -22,7 +19,7 @@ const AppWrapper = styled.div`
 `
 
 const App = () => {
-    const [todoList, setTodoList] = useState<Todo[]>([])
+    const [todoList] = useAtom(todoListAtom);
     const [showModal, setShowModal] = useState(false)
     const [selectedTodo, setSelectedTodo] = useState<Todo>({} as Todo)
 
@@ -34,25 +31,21 @@ const App = () => {
     }
 
     return (
-        <TodoListContext.Provider value={{todoList, setTodoList}}>
-            <AppWrapper>
-                <TitleName todos={todoList} />
-                <Form />
-                {showModal && 
-                    <EditTodoModal todoForEdit={selectedTodo}/>
-                }
-                <TodoListContext.Consumer>
-                    {value => value.todoList.map((todo, index) => 
-                        <ToDo
-                            todo={todo}
-                            key={todo.id}
-                            index={index}
-                            toggleModal={toggleModal}
-                        />
-                    )}
-                </TodoListContext.Consumer>
-            </AppWrapper>
-        </TodoListContext.Provider>
+        <AppWrapper>
+            <TitleName todos={todoList} />
+            <Form />
+            {showModal && 
+                <EditTodoModal todoForEdit={selectedTodo}/>
+            }
+            {todoList.map((todo, index) => 
+                <ToDo
+                    todo={todo}
+                    key={todo.id}
+                    index={index}
+                    toggleModal={toggleModal}
+                />
+            )}
+        </AppWrapper>
     );
 };
 
