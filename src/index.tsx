@@ -1,7 +1,8 @@
-import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './pages/App';
-import styled, {createGlobalStyle} from "styled-components";
+import {createGlobalStyle} from "styled-components";
+import { context } from "@reatom/react";
+import { store } from "./store";
 
 const Global = createGlobalStyle`
     * {
@@ -14,8 +15,10 @@ const Global = createGlobalStyle`
 
 ReactDOM.render(
   <>
+    <context.Provider value={store}>
       <Global/>
-    <App/>
+      <App/>
+    </context.Provider>
   </>,
   document.getElementById('root')
 );
