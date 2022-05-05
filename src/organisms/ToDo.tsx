@@ -23,7 +23,6 @@ function ToDo(props: Props) {
         <FormDiv>
         <StyledDiv 
             background={todo.complete? "white" : "green"}
-            // onClick={() => todoListAtom.edit.dispatch({...todo, complete : !todo.complete})}
         >
             <h4>{index + 1}</h4>
             <EditTopic>
