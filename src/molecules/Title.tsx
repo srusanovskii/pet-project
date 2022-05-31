@@ -19,7 +19,9 @@ const Wrapper = styled.section`
 const TitleName = (props: Props) => {
     const { todos } = props;
     const { t, i18n } = useTranslation('Title');
+
     const changeLanguage = () => i18n.language === 'en' ? i18n.changeLanguage('ru') : i18n.changeLanguage('en');
+
     return (
         <Wrapper>
             <ChangeLanguageButton onClick={changeLanguage}>{i18n.language}</ChangeLanguageButton>
