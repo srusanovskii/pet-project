@@ -6,12 +6,17 @@ export type TodoData = {
   description: string
 }
 
+export const setAction = declareAction<Todo[]>();
 export const addAction = declareAction<TodoData>();
 export const delAction = declareAction<Todo>();
 export const editAction = declareAction<Todo>();
 export const completeAction = declareAction<string>();
 
 export const todoListAtom = declareAtom<Todo[]>([], on => [
+  on(setAction, (state, newState): Todo[] => {
+    console.log(newState);
+    return newState;
+  }),
   on(addAction, (state, todoData): Todo[] => {
     const newTodo = {
       id: Math.random().toString(36).substring(2,9),

@@ -33,7 +33,6 @@ function ToDo(props: Props) {
     return (
         <FormDiv>
         <StyledDiv 
-
             background={todo.complete ? "white" : "green"}
             onClick={completeTodo}
         >
