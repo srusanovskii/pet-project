@@ -3,6 +3,7 @@ import App from './pages/App';
 import {createGlobalStyle} from "styled-components";
 import { context } from "@reatom/react";
 import { store } from "./store";
+import './i18n';
 
 const Global = createGlobalStyle`
     * {

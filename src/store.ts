@@ -9,6 +9,7 @@ export type TodoData = {
 export const addAction = declareAction<TodoData>();
 export const delAction = declareAction<Todo>();
 export const editAction = declareAction<Todo>();
+export const completeAction = declareAction<string>();
 
 export const todoListAtom = declareAtom<Todo[]>([], on => [
   on(addAction, (state, todoData): Todo[] => {
@@ -26,6 +27,9 @@ export const todoListAtom = declareAtom<Todo[]>([], on => [
   }),
   on(editAction, (state, todo): Todo[] => {
     return state.map((currentTodo) => currentTodo.id === todo.id ? todo : currentTodo);
+  }),
+  on(completeAction, (state, id): Todo[] => {
+    return state.map((todo) => todo.id === id ? {...todo, complete: !todo.complete} : todo);
   })
 ]);
 

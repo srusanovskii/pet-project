@@ -1,4 +1,3 @@
-import React from "react"
 import styled from "styled-components"
 import Form from "../molecules/Form"
 import TitleName from "../molecules/Title"
