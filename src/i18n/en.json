@@ -1,0 +1,20 @@
+{
+  "Form": {
+    "header": "Header",
+    "text": "Text",
+    "add": "Add"
+  },
+  "EditTodo": {
+    "new header": "New header",
+    "new text": "New text",
+    "change": "Change"
+  },
+  "Title": {
+    "number of tasks": "Number of tasks"
+  },
+  "ToDo": {
+    "ready": "Ready",
+    "edit": "Edit",
+    "delete": "Delete"
+  }
+}
