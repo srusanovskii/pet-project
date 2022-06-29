@@ -27,11 +27,7 @@ const App = () => {
 
     const setTodoList = useAction((todoList: Todo[]) => {
         return setAction(todoList);
-    })
-
-    // useEffect(() => {
-    //     throw new Error('Ошибка сделанная для примера поведения приложения при ошибке.');
-    // })
+    });
 
     const reorder = (list: Todo[], startIndex: number, endIndex: number) => {
         const result = Array.from(list);
@@ -42,6 +38,7 @@ const App = () => {
     }
 
     function onDragEnd(result: any) {
+        // dropped outside the list
         if (!result.destination) {
           return;
         }

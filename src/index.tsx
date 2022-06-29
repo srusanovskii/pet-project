@@ -1,7 +1,7 @@
 import ReactDOM from 'react-dom';
 import App from './pages/App';
 import ErrorBoundary from './atoms/ErrorBoundary';
-import {createGlobalStyle} from "styled-components";
+import { createGlobalStyle } from "styled-components";
 import { context } from "@reatom/react";
 import { store } from "./store";
 import './i18n/i18n';
