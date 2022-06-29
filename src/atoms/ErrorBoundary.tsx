@@ -19,6 +19,10 @@ class ErrorBoundary extends React.Component<Properties, States> {
     return { hasError: true, error: error };
   }
 
+  componentDidCatch(error: any, errorInfo: any) {
+    console.log(error, errorInfo);
+  }
+
   render() {
     if (this.state.hasError) {
       return (
@@ -26,7 +30,7 @@ class ErrorBoundary extends React.Component<Properties, States> {
           <h1>Произошла ошибка:</h1>
           <span>{this.state.error.message}</span>
         </>
-    );
+      );
     }
 
     return this.props.children; 

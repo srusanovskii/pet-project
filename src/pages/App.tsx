@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import Form from "../molecules/Form"
 import TitleName from "../molecules/Title"
-import {useState, useEffect} from "react"
+import {useState} from "react"
 import ToDo from "../organisms/ToDo"
 import {EditTodoModal} from "../molecules/EditTodoModal"
 import {Todo} from "../atoms/Todo"
@@ -29,9 +29,9 @@ const App = () => {
         return setAction(todoList);
     })
 
-    useEffect(() => {
-        throw new Error('Ошибка сделанная для примера поведения приложения при ошибке.');
-    })
+    // useEffect(() => {
+    //     throw new Error('Ошибка сделанная для примера поведения приложения при ошибке.');
+    // })
 
     const reorder = (list: Todo[], startIndex: number, endIndex: number) => {
         const result = Array.from(list);
@@ -42,13 +42,12 @@ const App = () => {
     }
 
     function onDragEnd(result: any) {
-        // dropped outside the list
         if (!result.destination) {
           return;
         }
     
         setTodoList(reorder(todoList, result.source.index, result.destination.index));
-      }
+    }
 
     const toggleModal = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, todoItem: Todo) => {
         e.preventDefault()
