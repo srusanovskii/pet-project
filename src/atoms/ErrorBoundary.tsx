@@ -3,7 +3,7 @@ import React from 'react';
 type Properties = any;
 type States = {
   hasError: boolean;
-  error: any;
+  error: Error | null;
 }
 
 class ErrorBoundary extends React.Component<Properties, States> {
@@ -15,11 +15,12 @@ class ErrorBoundary extends React.Component<Properties, States> {
     };
   }
 
-  static getDerivedStateFromError(error: any) {
+  static getDerivedStateFromError(error: Error) {
+    console.log('ERROR!!!!!!!!');
     return { hasError: true, error: error };
   }
 
-  componentDidCatch(error: any, errorInfo: any) {
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
     console.log(error, errorInfo);
   }
 

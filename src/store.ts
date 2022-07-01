@@ -14,7 +14,6 @@ export const completeAction = declareAction<string>();
 
 export const todoListAtom = declareAtom<Todo[]>([], on => [
   on(setAction, (state, newState): Todo[] => {
-    console.log(newState);
     return newState;
   }),
   on(addAction, (state, todoData): Todo[] => {
